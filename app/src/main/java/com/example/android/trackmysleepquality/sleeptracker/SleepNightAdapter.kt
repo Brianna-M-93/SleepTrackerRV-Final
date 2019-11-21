@@ -22,6 +22,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.trackmysleepquality.R
 import com.example.android.trackmysleepquality.convertDurationToFormatted
@@ -77,6 +78,18 @@ class SleepNightAdapter : RecyclerView.Adapter<SleepNightAdapter.ViewHolder>() {
                 return ViewHolder(view)
             }
         }
+    }
+}
+class SleepNightDiffCallback: DiffUtil.ItemCallback<SleepNight>(){
+    override fun areItemsTheSame(oldItem: SleepNight, newItem: SleepNight): Boolean {
+        //determine if night keys are the same. if they are the same then the sleepNight is the same
+        return oldItem.nightId == newItem.nightId
+    }
+
+    override fun areContentsTheSame(oldItem: SleepNight, newItem: SleepNight): Boolean {
+        //check if the list item has changed any values
+        //a data class automatically defines equals methods in itself
+        return oldItem == newItem
     }
 
 }
