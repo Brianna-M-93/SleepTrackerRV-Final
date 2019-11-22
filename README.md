@@ -1,38 +1,42 @@
-# Sleep Tracker RV
+# Sleep Tracker RV_Part 2
 
 An Android application that uses a RecyclerView to track and display the user's sleep quality.
 
 Submitted by: Brianna Magnuson
 
-Time spent: 3 days
+Time spent: 1.5 hours
 
 ## User Stories
 
 The following **required** functionality is complete:
 
-* [x] Replace ScrollView with RecyclerView.
-* [x] Create RecyclerView adapter and ViewHolder for data binding.
-* [x] Display sleep quality list by using recycled ViewHolders.
-* [x] Display sleep quality list using icons instead of text.
+* [x] Refactor onBindViewHolder
+* [x] Refactor onCreateViewHolder
+* [x] Refresh sleep night data using DiffUtil
+* [x] Add data binding to the adapter.
+* [x] Add binding adapters.
 
 
 The following **additional** features are implemented:
 
 * [ ] List anything else that you can get done to improve the app functionality!
 
-## Video Walkthrough 
+## Previous implemented functionality:
+
+* [X] Replace ScrollView with RecyclerView.
+* [X] Create RecyclerView adapter and ViewHolder for data binding.
+* [X] Display sleep quality list by using recycled ViewHolders.
+* [X] Display sleep quality list using icons instead of text.
+
+## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='sleep_trackerRV_demo.gif' title='Sleep Tracker RecyclerView animated demo' alt='Sleep Tracker RecyclerView demo' />
+<img src='sleep_trackerRV_demo2.gif' title='Sleep Tracker RecyclerView animated demo' alt='Sleep Tracker RecyclerView demo' />
 
 ## Notes
 
 Describe any challenges encountered while building the app.
-
-I had quite a few challenges while working on this app. I originally tried my code from the previous version of this app, 
-and something just wasn't working. I believe it was an unresolved variable issue, but I'm not sure where that variable would
-have to have been placed. I tried using the provided starter code and everything went smoothly from there.
 
 ## License
 
