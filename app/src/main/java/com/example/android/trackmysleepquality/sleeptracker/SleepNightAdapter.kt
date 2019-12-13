@@ -30,6 +30,8 @@ import com.example.android.trackmysleepquality.databinding.ListItemSleepNightBin
 import com.example.android.trackmysleepquality.generated.callback.OnClickListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 private val ITEM_VIEW_TYPE_HEADER = 0
 private val ITEM_VIEW_TYPE_ITEM = 1
@@ -38,7 +40,18 @@ class SleepNightAdapter(val clickListener: SleepNightListener) : ListAdapter<Dat
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
 
+    fun addHeaderAndSubmitList(list: List<SleepNight>?) {
+        adapterScope.launch {
+            val items = when (list) {
+                null -> listOf(DataItem.Header)
+                else -> listOf(DataItem.Header) + list.map { DataItem.SleepNightItem(it) }
+            }
 
+            withContext(Dispatchers.Main) {
+                submitList(items)
+            }
+        }
+    }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder){
@@ -78,7 +91,7 @@ class SleepNightAdapter(val clickListener: SleepNightListener) : ListAdapter<Dat
 
     class ViewHolder private constructor(val binding: ListItemSleepNightBinding) :RecyclerView.ViewHolder(binding.root){
 
-        fun bind(clickListener: SleepNightListener, item: SleepNight) {
+        fun bind(item: SleepNight, clickListener: SleepNightListener) {
             binding.sleep = item
             binding.clickListener = clickListener
             binding.executePendingBindings()   //executes pending bindings right away
