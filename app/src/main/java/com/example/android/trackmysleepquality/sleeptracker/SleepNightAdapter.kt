@@ -28,11 +28,17 @@ import com.example.android.trackmysleepquality.convertNumericQualityToString
 import com.example.android.trackmysleepquality.database.SleepNight
 import com.example.android.trackmysleepquality.databinding.ListItemSleepNightBinding
 import com.example.android.trackmysleepquality.generated.callback.OnClickListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 
 private val ITEM_VIEW_TYPE_HEADER = 0
 private val ITEM_VIEW_TYPE_ITEM = 1
 
 class SleepNightAdapter(val clickListener: SleepNightListener) : ListAdapter<DataItem, RecyclerView.ViewHolder>(SleepNightDiffCallback()) {
+
+    private val adapterScope = CoroutineScope(Dispatchers.Default)
+
+
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder){
@@ -62,6 +68,13 @@ class SleepNightAdapter(val clickListener: SleepNightListener) : ListAdapter<Dat
         }
     }
 
+    override fun getItemViewType(position: Int): Int {
+        return when (getItem(position)){
+            is DataItem.Header -> ITEM_VIEW_TYPE_HEADER
+            is DataItem.SleepNightItem -> ITEM_VIEW_TYPE_ITEM
+        }
+    }
+
 
     class ViewHolder private constructor(val binding: ListItemSleepNightBinding) :RecyclerView.ViewHolder(binding.root){
 
@@ -80,13 +93,13 @@ class SleepNightAdapter(val clickListener: SleepNightListener) : ListAdapter<Dat
         }
     }
 }
-class SleepNightDiffCallback: DiffUtil.ItemCallback<SleepNight>(){
-    override fun areItemsTheSame(oldItem: SleepNight, newItem: SleepNight): Boolean {
+class SleepNightDiffCallback: DiffUtil.ItemCallback<DataItem>(){
+    override fun areItemsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
         //determine if night keys are the same. if they are the same then the sleepNight is the same
-        return oldItem.nightId == newItem.nightId
+        return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: SleepNight, newItem: SleepNight): Boolean {
+    override fun areContentsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
         //check if the list item has changed any values
         //a data class automatically defines equals methods in itself
         return oldItem == newItem
